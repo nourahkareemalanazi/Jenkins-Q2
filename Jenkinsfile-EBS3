@@ -3,7 +3,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID     = credentials('nourahalanzi-aws-secret-access-key')
         AWS_SECRET_ACCESS_KEY = credentials('nourahalanzi-aws-secret-access-key')
-        ARTIFACT_NAME = 'nourah-beltexam.war'
+        ARTIFACT_NAME = 'nourah-beltexam.jar'
         AWS_S3_BUCKET = 'nourah-belt2d2-artifacts-123456'
         AWS_EB_APP_NAME = 'nourah-belt-exam'
         AWS_EB_ENVIRONMENT = 'Nourahbeltexam-env-1'
@@ -51,7 +51,7 @@ pipeline {
 
             post {
                 success {
-                    archiveArtifacts artifacts: '**/target/**.war', followSymlinks: false
+                    archiveArtifacts artifacts: '**/target/**.jar', followSymlinks: false
 
                     sh 'aws configure set region us-east-1'
                     sh 'aws s3 cp ./target/**.war s3://$AWS_S3_BUCKET/$ARTIFACT_NAME'
