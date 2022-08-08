@@ -10,6 +10,20 @@ pipeline {
         AWS_EB_APP_VERSION = "${BUILD_ID}"
     } 
     stages {
+
+        stage('sonar scan') {
+            steps {
+               
+            sh "mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=onsite-nourah_alanazi-B2D2 \
+  -Dsonar.host.url=http://52.23.193.18 \
+  -Dsonar.login=sqp_f313e668e24b6b0e4025c2cb447c66b515bf54ca"
+
+               
+            }
+            
+        }
+
         stage('Validate') {
             steps {
                 
@@ -37,28 +51,25 @@ pipeline {
 
             post {
                 always {
-                    junit '**/target/surefire-reports/TEST-*.xml'
+                    junit '/target/surefire-reports/TEST-*.xml'
                 }
             }
         }
 
-        stage('Package') {
+        stage('Package'){
             steps {
                 
                 sh "mvn package"
-
             }
-
-            post {
+              post {
                 success {
-                    archiveArtifacts artifacts: '**/target/**.jar', followSymlinks: false
-
+                    archiveArtifacts artifacts: '/target/.jar', followSymlinks: false
                     sh 'aws configure set region us-east-1'
-                    sh 'aws s3 cp ./target/**.jar s3://$AWS_S3_BUCKET/$ARTIFACT_NAME'
+                    sh 'aws s3 cp ./target/.jar s3://$AWS_S3_BUCKET/$ARTIFACT_NAME'
                 }
             }
         }
-
+        
         stage('Deploy') {
             steps {
 
