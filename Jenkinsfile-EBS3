@@ -9,7 +9,9 @@ pipeline {
         AWS_EB_ENVIRONMENT = 'Nourahbeltexam-env-1'
         AWS_EB_APP_VERSION = "${BUILD_ID}"
     } 
-    
+    stages {
+
+      
 
         stage('Validate') {
             steps {
@@ -28,11 +30,8 @@ pipeline {
 
             }
         }
-        
-        stages {
-    
-      
-        stage('sonar scan') {
+
+		  stage('sonar scan') {
             steps {
             sh "mun-Dmaven.test.failure.ignore=true clean compile" 
             sh "mvn clean verify sonar:sonar \
