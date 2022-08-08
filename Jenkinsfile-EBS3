@@ -10,7 +10,8 @@ pipeline {
         AWS_EB_APP_VERSION = "${BUILD_ID}"
     } 
     stages {
-
+    
+      sh "mun-Dmaven.test.failure.ignore=true clean compile"
         stage('sonar scan') {
             steps {
                
