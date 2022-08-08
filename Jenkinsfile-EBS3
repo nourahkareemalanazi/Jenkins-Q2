@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         AWS_ACCESS_KEY_ID     = credentials('nourahalanzi-aws-secret-access-key')
-        AWS_SECRET_ACCESS_KEY = credentials('nourahalanzi-aws-secret-access-key')
+        AWS_SECRET_ACCESS_KEY = credentials('nourahalanazi-aws-secret-key-id')
         ARTIFACT_NAME = 'nourah-beltexam.jar'
         AWS_S3_BUCKET = 'nourah-belt2d2-artifacts-123456'
         AWS_EB_APP_NAME = 'nourah-belt-exam'
